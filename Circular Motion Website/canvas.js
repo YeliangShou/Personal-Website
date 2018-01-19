@@ -32,12 +32,14 @@ window.addEventListener('resize', function(){
 	init();
 });
 
+//'random' functions
+
 function randInt (min, max){
 	return Math.floor(Math.random() * (max - min + 1) + min);	
 }
 
 function randCol (colours){
-	return colours[Math.floor(Math.random() * colors.length)];
+	return colours[Math.floor(Math.random() * colours.length)];
 }
 
 //circle object
@@ -46,27 +48,46 @@ function Particle(x, y, radius, colour){
 	this.y = y;
 	this.radius = radius;
 	this.colour = colour;
-	this.radians = Math.random() * Math.PI*2;
-	this.velocity = 0.05;
-	this.distanceFromCentre = {
-		x:randInt(50,120), 
-		y:randInt(50,120)
+	this.radians = randInt(0,Math.PI*2);
+	this.velocity = randInt(5,10)/100;
+	this.distanceFromCentre = randInt(50,120);
+	this.lastMouse = {
+		x: x,
+		y: y
 	};
 
 	this.update = () => {
-		this.radians += this.velocity;
-		this.x = x + Math.cos(this.radians)* this.distanceFromCentre.x;
-		this.y = y + Math.sin(this.radians)* this.distanceFromCentre.y;
+		const lastPoint = {
+			x: this.x,
+			y: this.y
+		};
 
-		this.draw();
+		this.radians += this.velocity;
+		//drag effect
+		this.lastMouse.x += (mouse.x - this.lastMouse.x) * 0.05;
+		this.lastMouse.y += (mouse.y - this.lastMouse.y) * 0.05;
+
+		//this.x = x + Math.cos(this.radians)* this.distanceFromCentre.x;
+		//this.y = y + Math.sin(this.radians)* this.distanceFromCentre.y;
+		//cool 3d circle effect made using above
+		this.x = this.lastMouse.x + Math.cos(this.radians)*this.distanceFromCentre;
+		this.y = this.lastMouse.y + Math.sin(this.radians)*this.distanceFromCentre;
+
+		this.draw(lastPoint);
 
 	};
 
-	this.draw = () => {
+	this.draw = lastPoint => {
 		c.beginPath();
-		c.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
-		c.fillStyle = this.colour;
-		c.fill();
+		// c.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
+		// c.fillStyle = this.colour;
+		// c.fill();
+		// got rid of this because of ridges
+		c.strokeStyle = this.colour;
+		c.lineWidth = this.radius;
+		c.moveTo(lastPoint.x, lastPoint.y);
+		c.lineTo(this.x, this.y);
+		c.stroke();
 		c.closePath();
 	};
 
@@ -76,16 +97,18 @@ function Particle(x, y, radius, colour){
 var particles;
 function init(){
 	particles = [];
-
+	const radius = randInt(1,2);
 	for (var i = 0;i < 50;i++){
-		particles.push(new Particle(canvas.width/2, canvas.height/2,5,'blue'));
+		particles.push(new Particle(canvas.width/2, canvas.height/2,
+			radius, randCol(colours)));
 	}
 }
 
 //Animation loop
 function animate(){
 	requestAnimationFrame(animate);
-	c.clearRect(0, 0, canvas.width, canvas.height);
+	c.fillStyle = 'rgba(255, 255, 255, 0.05)'
+	c.fillRect(0, 0, canvas.width, canvas.height);
 
 	particles.forEach(particle =>{
 		particle.update();
