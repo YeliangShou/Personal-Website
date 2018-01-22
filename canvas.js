@@ -43,30 +43,6 @@ window.addEventListener('click',function(){
 	// },3000);
 	
 });
-var decrease = [], numCircles = 60;
-window.addEventListener('mousedown',function(){
-	for (var i = 0;i < numCircles; i++){
-		decrease.push(setInterval(function(){
-			particle.distanceFromCentre.x -= randInt(100,400)/100;
-			particle.distanceFromCentre.y -= randInt(100,400)/100;
-		},100);)
-	}	
-
-	// particles.forEach(particle => {
-	// 	decrease = setInterval(function(){
-	// 		particle.distanceFromCentre.x -= randInt(100,400)/100;
-	// 		particle.distanceFromCentre.y -= randInt(100,400)/100;
-	// 	},100);
-	// });
-});
-
-window.addEventListener('mouseup',function(){
-	particles.forEach(particle => {
-		//particle.distanceFromCentre.x = particle.constDist;
-		//particle.distanceFromCentre.y = particle.constDist;
-		clearInterval(decrease);
-	});
-});
 
 //'random' functions
 
@@ -143,14 +119,41 @@ function Particle(x, y, radius, colour){
 var particles;
 function init(){
 	particles = [];
-	const radius = randInt(10,15);
-	numCircles = 60;
+	const radius = randInt(10,15), numCircles = 60;
 
 	for (var i = 0;i < numCircles;i++){
 		particles.push(new Particle(canvas.width/2, canvas.height/2,
 			radius, randCol(colours)));
 	}
 }
+
+var numCircles = 60;
+var decrease = [];
+window.addEventListener('mousedown',function(){
+	//for (var i = 0;i < numCircles; i++){
+	particles.forEach(particle => {
+		decrease.push((setInterval(function(){
+			particle.distanceFromCentre.x -= randInt(100,400)/100;
+			particle.distanceFromCentre.y -= randInt(100,400)/100;
+			},100)
+		));
+	});	
+
+	// particles.forEach(particle => {
+	// 	decrease = setInterval(function(){
+	// 		particle.distanceFromCentre.x -= randInt(100,400)/100;
+	// 		particle.distanceFromCentre.y -= randInt(100,400)/100;
+	// 	},100); 	
+	// });
+});
+
+window.addEventListener('mouseup',function(){
+	particles.forEach(particle => {
+		//particle.distanceFromCentre.x = particle.constDist;
+		//particle.distanceFromCentre.y = particle.constDist;
+		clearInterval(decrease);
+	});
+});
 
 //Animation loop
 function animate(){
