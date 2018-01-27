@@ -44,6 +44,30 @@ window.addEventListener('click',function(){
 	
 });
 
+//decreasing circle size and making it go bonkers
+var particleCount = 0, decreasing = 0;
+var decrease = {
+	x: randInt(100,400)/50,
+	y: randInt(100,400)/50
+}
+
+window.addEventListener('mousedown',function(){
+	decreasing = 1;	
+});
+
+window.addEventListener('mouseup',function(){
+	decreasing = 0;
+	//particles.forEach(particle => {
+		//particle.distanceFromCentre.x = particle.constDist;
+		//particle.distanceFromCentre.y = particle.constDist;
+	//	clearInterval(decrease[particleCount]);
+	//	particleCount++;
+	//	console.log(particleCount);
+
+	//});
+});
+
+
 //'random' functions
 
 function randInt (min, max){
@@ -62,15 +86,11 @@ function Particle(x, y, radius, colour){
 	this.radius = radius;
 	this.colour = colour;
 	this.radians = randInt(0,Math.PI*2);
-	this.velocity = randInt(5,10)/250;
+	this.velocity = randInt(4,7)/250;
 	this.constDist = randInt(100,400);
 	this.distanceFromCentre = {
 		x: this.constDist,
 		y: this.constDist
-	}
-	this.distanceFromCentre3D = {
-		x: randInt(100,400),
-		y: randInt(100,400)
 	}
 	this.lastMouse = {
 		x: x,
@@ -93,6 +113,21 @@ function Particle(x, y, radius, colour){
 		//cool 3d circle effect made using above
 		this.x = this.lastMouse.x + Math.cos(this.radians)*this.distanceFromCentre.x;
 		this.y = this.lastMouse.y + Math.sin(this.radians)*this.distanceFromCentre.y;
+
+		//returning the circle to the normal radius
+		if (this.distanceFromCentre.x <= this.constDist && decreasing == 0){
+			this.distanceFromCentre.x += 3;
+		}
+		if (this.distanceFromCentre.y <= this.constDist && decreasing == 0){
+			this.distanceFromCentre.y += 3;
+		}
+
+		if (this.distanceFromCentre.x <= this.constDist+5 && decreasing == 1){
+			this.distanceFromCentre.x -= decrease.x;
+		}
+		if (this.distanceFromCentre.y <= this.constDist+5 && decreasing == 1){
+			this.distanceFromCentre.y -= decrease.y;
+		}
 
 		this.draw(lastPoint);
 
@@ -119,41 +154,13 @@ function Particle(x, y, radius, colour){
 var particles;
 function init(){
 	particles = [];
-	const radius = randInt(10,15), numCircles = 60;
+	const radius = randInt(8,10), numCircles = 60;
 
 	for (var i = 0;i < numCircles;i++){
 		particles.push(new Particle(canvas.width/2, canvas.height/2,
 			radius, randCol(colours)));
 	}
 }
-
-var numCircles = 60;
-var decrease = [];
-window.addEventListener('mousedown',function(){
-	//for (var i = 0;i < numCircles; i++){
-	particles.forEach(particle => {
-		decrease.push((setInterval(function(){
-			particle.distanceFromCentre.x -= randInt(100,400)/100;
-			particle.distanceFromCentre.y -= randInt(100,400)/100;
-			},100)
-		));
-	});	
-
-	// particles.forEach(particle => {
-	// 	decrease = setInterval(function(){
-	// 		particle.distanceFromCentre.x -= randInt(100,400)/100;
-	// 		particle.distanceFromCentre.y -= randInt(100,400)/100;
-	// 	},100); 	
-	// });
-});
-
-window.addEventListener('mouseup',function(){
-	particles.forEach(particle => {
-		//particle.distanceFromCentre.x = particle.constDist;
-		//particle.distanceFromCentre.y = particle.constDist;
-		clearInterval(decrease);
-	});
-});
 
 //Animation loop
 function animate(){
