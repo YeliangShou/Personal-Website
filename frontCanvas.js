@@ -36,12 +36,12 @@ window.addEventListener('resize', function(){
 	//init();
 });
 
-//event listener for going home
-window.addEventListener('click',function(){
-	// setTimeout( function(){
-	// 	document.location = 'Actual Website/homePage.html';
-	// },3000);
-	
+//Goes through the canvas to the homepage
+var enter = document.getElementsByClassName('enter');
+enter[0].addEventListener('click',function(){
+	 setTimeout( function(){
+	 	document.location = 'Actual Website/homePage.html';
+	 },3000);
 });
 
 //decreasing circle size and making it go bonkers
@@ -75,16 +75,17 @@ function Particle(x, y, radius, colour){
 	this.radius = radius;
 	this.colour = colour;
 	this.radians = randInt(0,Math.PI*2);
-	this.velocity = randInt(3,8)/250;
-	this.velocity3D = this.velocity*3;
+	this.velocity = randInt(30,80)/2500;
+	this.velocity3D = this.velocity*4;
 	var velocityIncrease = this.velocity / 25;
 	var originalVelocity = this.velocity;
 	this.constDist = randInt(window.innerHeight/8,window.innerHeight/2.5);
 	this.distanceFromCentre = {
-		//x: -window.innerWidth,
-		//y: -window.innerHeight
-		x: -window.innerWidth/5,
-		y: -window.innerHeight/5
+		x: -window.innerWidth,
+		y: -window.innerHeight
+		//just to start at a closer position for testing
+		// x: -window.innerWidth/5,
+		// y: -window.innerHeight/5
 	}
 	this.distanceFromCentre3D = {
 		x: randInt(this.constDist/6,this.constDist/2),
@@ -116,18 +117,15 @@ function Particle(x, y, radius, colour){
 		this.lastMouse.x += (mouse.x - this.lastMouse.x) * 0.05;
 		this.lastMouse.y += (mouse.y - this.lastMouse.y) * 0.05;
 
-		//this.x = this.lastMouse.x + Math.cos(this.radians)* this.distanceFromCentre3D.x;
-		//this.y = this.lastMouse.y + Math.sin(this.radians)* this.distanceFromCentre3D.y;
-		//cool 3d circle effect made using above
 		this.x = this.lastMouse.x + Math.cos(this.radians)*this.distanceFromCentre.x;
 		this.y = this.lastMouse.y + Math.sin(this.radians)*this.distanceFromCentre.y;
 
 		//returning the circle to the normal radius
 		if (this.distanceFromCentre.x <= this.constDist && decreasing == 0){
-			this.distanceFromCentre.x += distChange.x;
+			this.distanceFromCentre.x += distChange.x+1;
 		}
 		if (this.distanceFromCentre.y <= this.constDist && decreasing == 0){
-			this.distanceFromCentre.y += distChange.y;
+			this.distanceFromCentre.y += distChange.y+1;
 		}
 		if (this.velocity >originalVelocity && decreasing ==0){
 			this.velocity -= velocityIncrease;

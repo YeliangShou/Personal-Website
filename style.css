@@ -4,3 +4,57 @@ canvas {
 body{
 	margin:0;
 }
+
+.box {
+	
+	position: absolute;
+	left: 50%;
+	top: 42%;
+	
+}
+
+.bigText {
+	
+	position: relative;
+	left: -50%;
+	top: -10vh;
+	
+	text-align: center;
+	font-family:'Poiret One';
+	font-size: 9vmin;
+	color:white;
+	background-color: "black";
+}
+
+.smallText {
+	position: relative;
+	left: -50%;
+	top: 10vh;
+
+	text-align: center;
+	font-family:'Poiret One';
+	font-size:3vmin;
+	color:white;
+	background-color:"black";
+}
+
+.enter {
+	position: relative;
+	left: -50%;
+	top:-10vmin;
+
+	margin: auto;
+	text-align: center;
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 10px 20px 10px 20px;
+	color: white;
+	font-size: 9vmin;
+	font-family: 'Poiret One';
+	background-color: "black";
+	cursor: pointer;
+}
+
+.noselect {
+	user-select: none;
+}
