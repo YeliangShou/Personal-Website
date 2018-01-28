@@ -33,7 +33,7 @@ window.addEventListener('resize', function(){
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 
-	init();
+	//init();
 });
 
 //event listener for going home
@@ -46,25 +46,14 @@ window.addEventListener('click',function(){
 
 //decreasing circle size and making it go bonkers
 var particleCount = 0, decreasing = 0;
-var decrease = {
-	x: randInt(100,400)/50,
-	y: randInt(100,400)/50
-}
 
+//Pushing mouse will initiate the circle becoming smaller
 window.addEventListener('mousedown',function(){
 	decreasing = 1;	
 });
 
 window.addEventListener('mouseup',function(){
 	decreasing = 0;
-	//particles.forEach(particle => {
-		//particle.distanceFromCentre.x = particle.constDist;
-		//particle.distanceFromCentre.y = particle.constDist;
-	//	clearInterval(decrease[particleCount]);
-	//	particleCount++;
-	//	console.log(particleCount);
-
-	//});
 });
 
 
@@ -86,17 +75,36 @@ function Particle(x, y, radius, colour){
 	this.radius = radius;
 	this.colour = colour;
 	this.radians = randInt(0,Math.PI*2);
-	this.velocity = randInt(4,7)/250;
-	this.constDist = randInt(100,400);
+	this.velocity = randInt(3,8)/250;
+	this.velocity3D = this.velocity*3;
+	var velocityIncrease = this.velocity / 25;
+	var originalVelocity = this.velocity;
+	this.constDist = randInt(window.innerHeight/8,window.innerHeight/2.5);
 	this.distanceFromCentre = {
-		x: this.constDist,
-		y: this.constDist
+		//x: -window.innerWidth,
+		//y: -window.innerHeight
+		x: -window.innerWidth/5,
+		y: -window.innerHeight/5
 	}
+	this.distanceFromCentre3D = {
+		x: randInt(this.constDist/6,this.constDist/2),
+		y: randInt(this.constDist/6,this.constDist/2)
+	}
+	var distChange = {
+		x: 2,
+		y: 2
+	}
+
 	this.lastMouse = {
 		x: x,
 		y: y
 	};
+	var alternate = {
+		x: 0,
+		y: 0
+	}
 
+	//Used to update the circles
 	this.update = function(){
 		const lastPoint = {
 			x: this.x,
@@ -108,25 +116,81 @@ function Particle(x, y, radius, colour){
 		this.lastMouse.x += (mouse.x - this.lastMouse.x) * 0.05;
 		this.lastMouse.y += (mouse.y - this.lastMouse.y) * 0.05;
 
-		// this.x = this.lastMouse.x + Math.cos(this.radians)* this.distanceFromCentre3D.x;
-		// this.y = this.lastMouse.y + Math.sin(this.radians)* this.distanceFromCentre3D.y;
+		//this.x = this.lastMouse.x + Math.cos(this.radians)* this.distanceFromCentre3D.x;
+		//this.y = this.lastMouse.y + Math.sin(this.radians)* this.distanceFromCentre3D.y;
 		//cool 3d circle effect made using above
 		this.x = this.lastMouse.x + Math.cos(this.radians)*this.distanceFromCentre.x;
 		this.y = this.lastMouse.y + Math.sin(this.radians)*this.distanceFromCentre.y;
 
 		//returning the circle to the normal radius
 		if (this.distanceFromCentre.x <= this.constDist && decreasing == 0){
-			this.distanceFromCentre.x += 3;
+			this.distanceFromCentre.x += distChange.x;
 		}
 		if (this.distanceFromCentre.y <= this.constDist && decreasing == 0){
-			this.distanceFromCentre.y += 3;
+			this.distanceFromCentre.y += distChange.y;
+		}
+		if (this.velocity >originalVelocity && decreasing ==0){
+			this.velocity -= velocityIncrease;
 		}
 
+
+		//making the circle shrink and go crazy at the middle
 		if (this.distanceFromCentre.x <= this.constDist+5 && decreasing == 1){
-			this.distanceFromCentre.x -= decrease.x;
+			// Different code when the circle shrinks
+			// if (this.distanceFromCentre.x <= -this.constDist /2){
+			
+			// 	alternate.x = 1;
+			// }else if (this.distanceFromCentre.x > this.constDist/2){
+			// 	alternate.x = 0;
+			// }
+			// if (alternate.x == 1){
+			// 	this.distanceFromCentre.x += distChange.x;
+			// }else{
+			// 	this.distanceFromCentre.x -= distChange.x;
+			// }
+			
+			//creates a cool 3D effect
+			if (this.distanceFromCentre.x > this.distanceFromCentre3D.x){
+				this.distanceFromCentre.x -= distChange.x;
+			}
+			else if (this.distanceFromCentre.x < this.distanceFromCentre3D.x-10){
+				this.distanceFromCentre.x += distChange.x;
+			}
+			// else{
+			// 	this.distanceFromCentre.x = this.distanceFromCentre3D.x;
+			// }
+
+			//Velocity is only being changed from the distance from X shouldn't be that big of a deal
+			if (this.velocity < this.velocity3D){
+				this.velocity += velocityIncrease;
+			}
+
 		}
 		if (this.distanceFromCentre.y <= this.constDist+5 && decreasing == 1){
-			this.distanceFromCentre.y -= decrease.y;
+			//different code for when the circle shrinks
+			// if (this.distanceFromCentre.y <= -this.constDist/2){
+			// 	alternate.y = 1;
+			// }else if (this.distanceFromCentre.y > this.constDist/2){
+			// 	alternate.y = 0;	
+			// }
+			// if (alternate.y == 1){
+			// 	this.distanceFromCentre.y += distChange.y;
+			// }else{
+			// 	this.distanceFromCentre.y -= distChange.y;
+			// }
+			
+
+			if (this.distanceFromCentre.y > this.distanceFromCentre3D.y){
+				this.distanceFromCentre.y -= distChange.y;
+			}
+			else if (this.distanceFromCentre.y < this.distanceFromCentre3D.y-10){
+				this.distanceFromCentre.y += distChange.y;
+			}
+			// else{
+			// 	this.distanceFromCentre.y = this.distanceFromCentre3D.y;
+			// }
+
+			
 		}
 
 		this.draw(lastPoint);
