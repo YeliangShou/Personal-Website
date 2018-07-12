@@ -40,7 +40,7 @@ window.addEventListener('resize', function(){
 var enter = document.getElementsByClassName('enter');
 enter[0].addEventListener('click',function(){
 	 setTimeout( function(){
-	 	document.location = 'Actual Website/homePage.html';
+	 	document.location = 'Actual Website/home.html';
 	 },3000);
 });
 
@@ -81,8 +81,8 @@ function Particle(x, y, radius, colour){
 	var originalVelocity = this.velocity;
 	this.constDist = randInt(window.innerHeight/8,window.innerHeight/2.5);
 	this.distanceFromCentre = {
-		x: -window.innerWidth,
-		y: -window.innerHeight
+		x: -window.innerWidth/1.5,
+		y: -window.innerHeight/1.5
 		//just to start at a closer position for testing
 		// x: -window.innerWidth/5,
 		// y: -window.innerHeight/5
@@ -134,29 +134,14 @@ function Particle(x, y, radius, colour){
 
 		//making the circle shrink and go crazy at the middle
 		if (this.distanceFromCentre.x <= this.constDist+5 && decreasing == 1){
-			// Different code when the circle shrinks
-			// if (this.distanceFromCentre.x <= -this.constDist /2){
 			
-			// 	alternate.x = 1;
-			// }else if (this.distanceFromCentre.x > this.constDist/2){
-			// 	alternate.x = 0;
-			// }
-			// if (alternate.x == 1){
-			// 	this.distanceFromCentre.x += distChange.x;
-			// }else{
-			// 	this.distanceFromCentre.x -= distChange.x;
-			// }
-			
-			//creates a cool 3D effect
+			//creates 3D effect
 			if (this.distanceFromCentre.x > this.distanceFromCentre3D.x){
 				this.distanceFromCentre.x -= distChange.x;
 			}
 			else if (this.distanceFromCentre.x < this.distanceFromCentre3D.x-10){
 				this.distanceFromCentre.x += distChange.x;
 			}
-			// else{
-			// 	this.distanceFromCentre.x = this.distanceFromCentre3D.x;
-			// }
 
 			//Velocity is only being changed from the distance from X shouldn't be that big of a deal
 			if (this.velocity < this.velocity3D){
@@ -165,19 +150,7 @@ function Particle(x, y, radius, colour){
 
 		}
 		if (this.distanceFromCentre.y <= this.constDist+5 && decreasing == 1){
-			//different code for when the circle shrinks
-			// if (this.distanceFromCentre.y <= -this.constDist/2){
-			// 	alternate.y = 1;
-			// }else if (this.distanceFromCentre.y > this.constDist/2){
-			// 	alternate.y = 0;	
-			// }
-			// if (alternate.y == 1){
-			// 	this.distanceFromCentre.y += distChange.y;
-			// }else{
-			// 	this.distanceFromCentre.y -= distChange.y;
-			// }
 			
-
 			if (this.distanceFromCentre.y > this.distanceFromCentre3D.y){
 				this.distanceFromCentre.y -= distChange.y;
 			}

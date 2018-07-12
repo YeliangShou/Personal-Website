@@ -36,23 +36,27 @@ body{
 	font-size:3vmin;
 	color:white;
 	background-color:"black";
+	display:none;
 }
 
 .enter {
 	position: relative;
 	left: -50%;
 	top:-10vmin;
+	width: 5em;
 
 	margin: auto;
 	text-align: center;
 	border: 1px solid white;
 	border-radius: 5px;
-	padding: 10px 20px 10px 20px;
+	border-style: groove;
+	padding: 5px 0px 5px 0px;
 	color: white;
 	font-size: 9vmin;
 	font-family: 'Poiret One';
 	background-color: "black";
 	cursor: pointer;
+	display:none;
 }
 
 .noselect {
