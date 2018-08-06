@@ -1,0 +1,12 @@
+{
+  "name": "Personal-Website",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Yeliang-Radish/Personal-Website",
+  "author": "Yeliang Shou <yeliang.shou@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "hbs": "^4.0.1"
+  }
+}
