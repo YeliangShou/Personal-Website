@@ -8,7 +8,6 @@ var app = express();
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));
-// app.use(express.static(__dirname + "javascript"));
 
 app.use((req, res, next) => {
     var now = new Date().toString();
@@ -25,6 +24,10 @@ app.use((req, res, next) => {
 
 app.get("/", (req, res) => {
     res.render("index.hbs");
+});
+
+app.get("/home.hbs", (req, res) => {
+    res.render("home.hbs");
 });
 
 app.listen(port, () => {

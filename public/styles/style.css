@@ -1,64 +1,62 @@
 canvas {
-	border:1px solid black;	
+    border: 1px solid black;
 }
-body{
-	margin:0;
+body {
+    margin: 0;
+    cursor: grab;
 }
 
 .box {
-	
-	position: absolute;
-	left: 50%;
-	top: 42%;
-	
+    position: absolute;
+    left: 50%;
+    top: 42%;
 }
 
 .bigText {
-	
-	position: relative;
-	left: -50%;
-	top: -10vh;
-	
-	text-align: center;
-	font-family:'Poiret One';
-	font-size: 9vmin;
-	color:white;
-	background-color: "black";
+    position: relative;
+    left: -50%;
+    top: -10vh;
+
+    text-align: center;
+    font-family: "Poiret One";
+    font-size: 9vmin;
+    color: white;
+    background-color: "black";
 }
 
 .smallText {
-	position: relative;
-	left: -50%;
-	top: 10vh;
+    position: relative;
+    left: -50%;
+    top: 10vh;
 
-	text-align: center;
-	font-family:'Poiret One';
-	font-size:3vmin;
-	color:white;
-	background-color:"black";
-	display:none;
+    text-align: center;
+    font-family: "Poiret One";
+    font-size: 3vmin;
+    color: white;
+    background-color: "black";
+    display: none;
 }
 
-.enter {
-	position: relative;
-	left: -50%;
-	top:-10vmin;
-	width: 5em;
+.welcome-btn {
+    position: relative;
+    left: -50%;
+    top: -10vmin;
+    width: 5em;
 
-	margin: auto;
-	text-align: center;
-	border: 1px solid white;
-	border-radius: 5px;
-	border-style: groove;
-	padding: 5px 0px 5px 0px;
-	color: white;
-	font-size: 9vmin;
-	font-family: 'Poiret One';
-	background-color: "black";
-	cursor: pointer;
-	display:none;
+    margin: auto;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 5px;
+    border-style: groove;
+    padding: 5px 0px 5px 0px;
+    color: white;
+    font-size: 9vmin;
+    font-family: "Poiret One";
+    background-color: "black";
+    cursor: pointer;
+    display: none;
 }
 
 .noselect {
-	user-select: none;
+    user-select: none;
 }
